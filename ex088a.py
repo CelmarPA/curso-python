@@ -16,7 +16,6 @@
 # Importação de bibliotecas
 from random import randint
 from time import sleep
-
 # Lista de cores
 cores = {'reset': '\033[m', 'red': '\033[31m', 'green': '\033[32m', 'yellow': '\033[033m', 'blue': '\033[34m',
          'lilas': '\033[1;35m'}
@@ -35,24 +34,33 @@ print(f'{cores["lilas"]}-{cores["reset"]}' * 40)
 # Solicita a quantidade de jogos
 quant = int(input('Quantos jogos você quer que eu sorteie? '))
 
-# Inicialização de listas
-jogos = [list([0, 0, 0, 0, 0, 0]) for _ in range(0, quant)]  # Iniciailiza a lista jogos com a quantidade de jogos
+# Inicialização de variáveis
+tot = 1
 
-# Loop para geração dos números dos jogos
-for c, j in enumerate(jogos):
-    for i in range(0, 6):
-        palpite = randint(1, 60)
-        while palpite in j:
-            palpite = randint(1, 60)
-        jogos[c][i] = palpite
+# Inicialização de lista
+lista = list()
+jogos = list()
 
-# Imprime os jogos sorteados
+while tot <= quant:
+    cont = 0
+    while True:
+        num = randint(1, 60)
+        if num not in lista:
+            lista.append(num)
+            cont += 1
+        if cont >= 6:
+            break
+    lista.sort()
+    jogos.append(lista[:])
+    lista.clear()
+    tot += 1
+    # Imprime os jogos sorteados
 print(f'{cores["lilas"]}-=-=-{cores["reset"]}' * 2, end='')
 print(f'{cores["green"]}{f" SORTEANDO {len(jogos)} JOGOS "}{cores["reset"]}', end='')
 print(f'{cores["lilas"]}-=-=-{cores["reset"]}' * 2)
-for k in range(0,  quant):
-    print(f'{cores["blue"]}  Jogo {k + 1}: {sorted(jogos[k])}{cores["reset"]}')
+for i, l in enumerate(jogos):
+    print(f'Jogo {i + 1}: {l}')
     sleep(1)
-print(f'{cores["lilas"]}-=-=-{cores["reset"]}' * 2, end='')
+print(f'{cores["lilas"]}-=-=-={cores["reset"]}' * 2, end='')
 print(f'{cores["green"]}{f" < BOA SORTE! > "}{cores["reset"]}', end='')
-print(f'{cores["lilas"]}-=-=-{cores["reset"]}' * 2)
+print(f'{cores["lilas"]}-=-=-={cores["reset"]}' * 2)
