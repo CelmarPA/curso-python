@@ -15,17 +15,21 @@ print(f'{cores["green"]}{" Dividindo Valores em Várias Listas ":=^60}{cores["re
 print(f'{cores["lilas"]}-=-{cores["reset"]}' * 20)
 
 # Inicialização de variáveis
+parenteses = list()
+
 expressao = str(input('Digite a expressão: '))
-aberto = 0
-fechado = 0
 
 for p in expressao:
     if p == '(':
-        aberto += 1
+        parenteses.append('(')
     elif p == ')':
-        fechado += 1
+        if len(parenteses) > 0:
+            parenteses.pop()
+        else:
+            parenteses.append(')')
+            break
 
-if aberto == fechado:
+if len(parenteses) == 0:
     print(f'Sua expressão é válida!')
 else:
     print(f'Sua expressão está errada!')
