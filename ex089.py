@@ -22,9 +22,9 @@
     Nº. NOME          MÉDIA
     -------------------------
     0   Pedro          5.8
-    1   Pedro          8.0
-    2   Pedro          3.8
-    3   Pedro          4.8
+    1   Maria          8.0
+    2   João           3.8
+    3   Gustabo        4.8
     -------------------------
     Mostrar notas de qual aluno? (999 interrompe): 1
     Notas de Maria são [9.5, 6.5]
@@ -36,6 +36,9 @@
     FINALIZANDO...
     <<< VOLTE SEMPRE >>> """
 
+# Importação de bibliotecas
+from time import sleep
+
 # Lista de cores
 cores = {'reset': '\033[m', 'red': '\033[31m', 'green': '\033[32m', 'yellow': '\033[033m', 'blue': '\033[34m',
          'lilas': '\033[1;35m'}
@@ -44,45 +47,42 @@ cores = {'reset': '\033[m', 'red': '\033[31m', 'green': '\033[32m', 'yellow': '\
 print(f'{cores["green"]}-=-{cores["reset"]}' * 20)
 print(f'{cores["blue"]}{" Boletim ":=^60}{cores["reset"]}')
 print(f'{cores["green"]}-=-{cores["reset"]}' * 20)
-print(f'')
 
 # Inicialização de listas
 dados = list()
 boletim = list()
 notas = list()
-notas_boletim = list()
-media = 0
-soma = 0
-count = 1
+medias = list()
+
+# Inicialização de variáveis
+media = soma = 0
+
 while True:
     # Solicita o nome do aluno
     nome = str(input('Nome: '))
     # Coloca o nome do aluno em uma lista de dados temporários
     dados.append(nome)
-    notas.append(nome)
-    # Adiciona notas em um boteim de apenas notas
-    notas_boletim.append(notas[:])
-    notas.clear()
     # Loop para solicitação das duas notas
     for i in range(0, 2):
         nota = float(input(f'Nota {i+1}: '))
         # Coloca as notas do aluno em uma lista temporária
-        dados.append(nota)
         notas.append(nota)
         # Soma as notas para o cálculo da média
         soma += nota
     # Calcula a média
     media = soma / 2
-    # Coloca a média do aluno em uma lista temporária
-    dados.append(media)
+    # Faz uma cópia da lista notas para uma lista de dados temporários
+    dados.append(notas[:])
+    # Coloca a média calculada do aluno em uma lista de médias
+    medias.append(media)
     # Faz uma cópia de dados dentro da lista boletim
     boletim.append(dados[:])
-    notas_boletim.append(notas[:])
-    notas.clear()
     # Limpa as listas temporária dados
+    notas.clear()
     dados.clear()
-    # Zerá a soma
+    # Zera a soma e a média para novo loop
     soma = 0
+    media = 0
     # Solicita se o usuário deseja continuar
     opc = str(input('Deseja continuar: [S/N] ')).strip()[0]
     if opc in 'nN':
@@ -93,7 +93,27 @@ print(f'=-=' * 20)
 print(f'{"Nº":<3} {"NOME":<15} {"MÉDIA":>5}')
 print(f'-' * 30)
 for c, a in enumerate(boletim):
-    print(f'{c:<3} {a[0]:<15} {a[3]:^5}')
+    print(f'{c:<3} {a[0]:<15} {medias[c]:^5.1f}')
+print(f'-' * 30)
 
 # Menu com notas individuais
-print(boletim)
+while True:
+    # Solicita o código do aluno que deseja verificar as notas
+    aluno = int(input(f'Mostra nota de qual aluno? (999 interrompe) '))
+    # Se o código digitado for 999 faz break
+    if aluno == 999:
+        break
+    # Faz o loop para imprimir o nome e as noras
+    for i, hist in enumerate(boletim):
+        # Se o código do aluno estiver no boletim esse será impresso
+        if aluno == i:
+            print(f'Notas de {hist[0]} são {hist[1]}')
+            print(f'-' * 30)
+        elif aluno >= len(boletim):
+            print('Aluno não encontrado no banco de dados. Tente novamente!')
+            break
+# Mensagem final do programa
+print(f'=-=' * 20)
+print(f'FINALIZANDO...')
+sleep(1)
+print(f'<< VOLTE SEMPRE! >>')
