@@ -47,3 +47,62 @@
     ------------------------------------------------
     Mostra dados de qual jogador? 999
     << VOLTE SEMPRE >> """
+
+# Lista de cores
+cores = {'reset': '\033[m', 'red': '\033[31m', 'green': '\033[32m', 'yellow': '\033[033m', 'blue': '\033[34m',
+         'lilas': '\033[1;35m'}
+
+# Título do programa
+print(f'{cores["lilas"]}-=-{cores["reset"]}' * 20)
+print(f'{cores["yellow"]}{" Aprimorando os Dicionários ":=^60}{cores["reset"]}')
+print(f'{cores["lilas"]}-=-{cores["reset"]}' * 20)
+
+# Inicialização de dicionários e listas
+jogador = dict()
+jogadores = list()
+gols = list()
+
+# Solicita os dados ao usuário
+while True:
+    jogador['nome'] = str(input('Nome do Jogador: ')).strip().capitalize()
+    partidas = int(input(f'Quantas partidas {jogador["nome"]} jogou? '))
+    # Loop para saldo de gols
+    for c in range(0, partidas):
+        gols.append(int(input(f'Quantos gols na partida {c + 1}? ')))
+    # Copia a lista gols para dentro do dicionário jogador
+    jogador['gols'] = gols[:]
+    # Copia o total de gols do jogador
+    jogador['total'] = sum(gols)
+    # Copia o dicionário jogador para a lista jogadores
+    jogadores.append(jogador.copy())
+    # Limpa a lista gols
+    gols.clear()
+    # Pergunta se o usuário deseja continuar
+    opc = str(input('Deseja continuar? [S/N] ')).strip().upper()[0]
+    while opc not in 'SN':
+        print(f'ERRO! Responda apenas S ou N.')
+        opc = str(input('Deseja continuar? [S/N] ')).strip().upper()[0]
+    if opc == 'N':
+        break
+
+print(f'-=' * 30)
+
+# Imprime a tabela de jogadores
+print(f'{"cod":<3} {"nome":<15} {"gols":<20} {"total":<6}')
+print(f'-' * 50)
+for c, v in enumerate(jogadores):
+    print(f'{c:>3} {v["nome"]:<15}', f'{v["gols"]}'.ljust(20), f'{v["total"]:<6}')
+print(f'-' * 50)
+
+# Mostra os dados do jogador selecionado
+while True:
+    resp = int(input('Mostrar dados de qual jogador? (999 para parar) '))
+    if resp == 999:
+        break
+    if resp >= len(jogadores):
+        print(f'ERRO! Não existe jogador com código {resp}!')
+    else:
+        print(f' -- LEVANTAMENTO DO JOGADOR {jogadores[resp]["nome"].upper()}:')
+        for i, g in enumerate(jogadores[resp]['gols']):
+            print(f'    No jogo {i + 1} fez {g} gols.')
+print(f'<< VOLTE SEMPRE >>')

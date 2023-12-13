@@ -13,7 +13,7 @@
     {'nome': 'Joelson', 'gols': [2, 1, 0, 0, 3], 'total': 6}
     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     O campo nome tem o valor Joelson.
-    O campo gols tem o valor [2, 1, 0, 0, 3].;
+    O campo gols tem o valor [2, 1, 0, 0, 3].
     O campo total tem o valor 6.
     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     O jogador Joelson jogou 5 partidas.
@@ -23,3 +23,49 @@
         => Na partida 3, fez 0 gols.
         => Na partida 4, fez 3 gols.
     Foi um total de 6 gols. """
+
+# Lista de cores
+cores = {'reset': '\033[m', 'red': '\033[31m', 'green': '\033[32m', 'yellow': '\033[033m', 'blue': '\033[34m',
+         'lilas': '\033[1;35m'}
+
+# Título do programa
+print(f'{cores["yellow"]}-=-{cores["reset"]}' * 20)
+print(f'{cores["green"]}{" Cadastro de Jogador de Futebol ":=^60}{cores["reset"]}')
+print(f'{cores["yellow"]}-=-{cores["reset"]}' * 20)
+
+# Inicialização de dicionários e listas
+cadastro = dict()
+gols = list()
+
+# Inicialização de variáveis
+total = 0
+
+# Solicita os dados ao usuário
+cadastro['nome'] = str(input('Nome do jogador: '))
+partidas = int(input(f'Quantas partidas {cadastro["nome"]} jogou? '))
+
+# Loop para obtenção dos gols por partidas
+for c in range(0, partidas):
+    gols.append(int(input(f'Quantos gols na partida {c}? ')))
+
+# O dicionário recebe a lista de gols e o valor total de gols
+cadastro['gols'] = gols[:]
+cadastro['total'] = sum(gols)
+
+# Imprime o dicionário
+print(f'-=' * 30)
+print(cadastro)
+print(f'-=' * 30)
+
+# Loop para impressão dos valores dos campos
+for k, v in cadastro.items():
+    print(f'O campos {k} tem o valor {v}.')
+print(f'-=' * 30)
+
+# Estatísticas do jogador
+print(f'O jogador {cadastro["nome"]} jogou {len(cadastro["gols"])} partidas.')
+
+# Loop para obtenção do saldo de gols
+for c, v in enumerate(cadastro['gols']):
+    print(f'    => na partida {c}, fez {v} gols.')
+print(f'Foi um total de {cadastro["total"]} gols.')
