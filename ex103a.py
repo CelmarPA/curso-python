@@ -28,14 +28,21 @@ print(f'{cores["yellow"]}-=-{cores["reset"]}' * 20)
 
 
 # Função
-def ficha(j='', gol=''):
-    if j == '':
-        j = '<desconhecido>'
-    if gol == '':
-        gol = 0
-    return f'O jogador {j} fez {gol} gol(s) no campeonato.'
+def ficha(jogador='<desconhecido>', gol=0):
+    print(f'O jogador {jogador} fez {gol} gol(s) no campeonato.')
 
 
 # Programa principal
 print(f'-' * 30)
-print(ficha(str(input('Nome do jogador: ')).strip(), str(input('Número de gols: ').strip())))
+n = str(input('Nome do jogador: '))
+g = str(input('Número de gols: '))
+
+# Verificação dos parâmetros
+if g.isalnum():
+    g = int(g)
+else:
+    g = 0
+if n.strip() == '':
+    ficha(gol=g)
+else:
+    ficha(n, g)

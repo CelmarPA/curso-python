@@ -25,33 +25,21 @@ print(f'{cores["red"]}-=-{cores["reset"]}' * 20)
 
 # Função
 def notas(*n, sit=False):
-    nota = dict()
-    count = maior = menor = media = soma = 0
+    soma = 0
     for v in n:
-        if count == 0:
-            maior = menor = v
-        else:
-            if maior > v:
-                maior = v
-            if menor < v:
-                menor = v
         soma += v
-        count += 1
     media = soma / len(n)
-    nota['total'] = len(n)
-    nota['maior'] = maior
-    nota['menor'] = menor
-    nota['média'] = media
+    nota = {'total': len(n), 'maior': max(n), 'menor': min(n), 'média': media}
     if sit is True:
-        if 6 < media < 7:
-            nota['situação'] = 'RAZOÁVEL'
-        elif media >= 7:
-            nota['situação'] = 'BOA'
-        else:
+        if media < 6:
             nota['situação'] = 'RUIM'
+        elif 6 < media < 7:
+            nota['situação'] = 'RAZOÁVEL'
+        else:
+            nota['situação'] = 'BOA'
     return nota
 
 
 # Programa principal
-resp = notas(5.5, 9.5, 10, 6.5, sit=True)
+resp = notas(5.5, 6.5, 6.5, sit=True)
 print(resp)
