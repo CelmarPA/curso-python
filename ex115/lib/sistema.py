@@ -1,0 +1,42 @@
+# Importação de pacotes e modulos
+from ex115.lib. interface import *
+from ex115.lib. arquivo import *
+from time import sleep
+
+# Lista de cores
+cores = {'reset': '\033[m', 'red': '\033[31m', 'green': '\033[32m', 'yellow': '\033[033m', 'blue': '\033[34m',
+         'lilas': '\033[1;35m'}
+
+# Título do programa
+print(f'{cores["green"]}-=-{cores["reset"]}' * 20)
+print(f'{cores["yellow"]}{" SISTEMA ARQUIVO v1.0 ":=^60}{cores["reset"]}')
+print(f'{cores["green"]}-=-{cores["reset"]}' * 20)
+
+# Programa principal
+
+# Inicialização do arquivo
+arq = 'cadastro.txt'
+
+if not localizar_arquivo(arq):
+    print(f'{cores["yellow"]}Criando arquivo de cadastro...{cores["reset"]}')
+    sleep(1.5)
+    criar_arquivo(arq)
+
+while True:
+    # Lista com os itens do menu
+    opcao = menu(['Ver pessoas cadastradas', 'Cadastrar nova Pessoa', 'Sair do Sistema'])
+    # Verifica as opções escolhidas
+    if opcao == 1:
+        # Lista as pessoas cadastradas
+        ler_arquivo(arq)
+    elif opcao == 2:  # Cadastra nova pessoa
+        cabecalho('NOVO CADASTRO')
+        nome = str(input(f'Nome: '))
+        idade = leiaInt('Idade: ')
+        cadastrar(arq, nome, idade)
+    elif opcao == 3:  # Sai do sistema
+        cabecalho('Saindo do sistema... Até logo!')
+        break
+    else:
+        print(f'{cores["red"]}ERRO: Digite uma opção válida!{cores["reset"]}')
+    sleep(1.5)
